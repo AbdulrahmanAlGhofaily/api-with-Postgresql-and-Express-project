@@ -8,14 +8,36 @@ This is a project which aims to create an api using both Postgresql and Express 
 
 Start by install the required packages by running `npm install` on the root of the project.<br>
 Install and setup [Postgresql](https://www.postgresql.org/) on your machine<br>
-Create a new user for your postgresql databases, the user name should be `project_admin` and the password `projectPassword123` (Note: These two two should be secret, but for the project sake I shared it).<br>
-Create two databases, the first one for the development and it called `store_front`, the second one is for testing and it called `store_front_test`.
-To add the schemas to the development database, run `npm run db-up`. And to drop it run `npm run db-down`
+
+## Setting up the Database
+
+Create a new user and grant it all privileges to the databases by running these commands in Sql shell (psql): <br>
+start with user creation: `CREATE USER project_admin WITH PASSWORD projectPassword123;`<br>
+then development database: `CREATE DATABASE store_front;` <br>
+then testing database: `CREATE DATABASE store_front_test;` <br>
+followed by the next two commands for granting user privileges to the database: <br>
+`GRANT ALL PRIVILEGES ON DATABASE store_front TO project_admin;` <br>
+`GRANT ALL PRIVILEGES ON DATABASE store_front TO project_admin;` <br>
 
 ## Running the app
 
 To start the application run `npm run start` or `npm run watch` which will start the app and will start looking for any changes on the code.<br>
 The ip address of the app and the port will pop in the terminal, to change these two head to the .env file and change it to you preference.
+
+## Env variables
+
+- Note: .env variables are not supposed to be shared.<br>
+
+POSTGRES_HOST=127.0.0.1 <br>
+PORT=3000 <br>
+CURRENT_ENV=dev <br>
+POSTGRES_DB=store_front <br>
+POSTGRES_DB_TEST=store_front_test <br>
+POSTGRES_USER=project_admin <br>
+POSTGRES_PASSWORD=projectPassword123 <br>
+BCRYPT_PASSWORD=1ts_a_5ecret_Shhh <br>
+SALT_ROUNDS=10 <br>
+TOKEN_SECRET=Alb8alh12ksmsq1zzA!! <br>
 
 ## Testing the app
 
