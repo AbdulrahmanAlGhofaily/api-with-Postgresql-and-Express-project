@@ -5,13 +5,23 @@ import { verifyAuthToken } from '../middleware/verifyAuthToken';
 const store = new OrderStore();
 
 const index = async (_req: Request, res: Response) => {
-  const orders: Order[] = await store.index();
-  res.json(orders);
+  try {
+    const orders: Order[] = await store.index();
+    res.json(orders);
+  } catch (error) {
+    res.status(400);
+    res.json(error);
+  }
 };
 
 const show = async (req: Request, res: Response) => {
-  const order: Order = await store.show(req.params.id);
-  res.json(order);
+  try {
+    const order: Order = await store.show(req.params.id);
+    res.json(order);
+  } catch (error) {
+    res.status(400);
+    res.json(error);
+  }
 };
 
 const create = async (req: Request, res: Response) => {
@@ -19,11 +29,13 @@ const create = async (req: Request, res: Response) => {
     order_status: req.body.order_status,
     user_id: req.body.user_id
   };
-
-  const newOrder: Order = await store.create(order);
-  console.log(newOrder);
-
-  res.json(newOrder);
+  try {
+    const newOrder: Order = await store.create(order);
+    res.json(newOrder);
+  } catch (error) {
+    res.status(400);
+    res.json(error);
+  }
 };
 
 const update = async (req: Request, res: Response) => {
@@ -33,9 +45,13 @@ const update = async (req: Request, res: Response) => {
     user_id: req.body.user_id
   };
 
-  const updateOrder: Order = await store.update(orderId, order);
-
-  res.json(updateOrder);
+  try {
+    const updateOrder: Order = await store.update(orderId, order);
+    res.json(updateOrder);
+  } catch (error) {
+    res.status(400);
+    res.json(error);
+  }
 };
 
 const deleteOrder = async (req: Request, res: Response) => {
@@ -50,12 +66,13 @@ const addProductToOrder = async (req: Request, res: Response) => {
     product_id: req.body.product_id,
     order_id: req.body.order_id
   };
-
-  console.log(order);
-
-  const newProductToOrder: Order = await store.addProductToOrder(order);
-
-  res.json(newProductToOrder);
+  try {
+    const newProductToOrder: Order = await store.addProductToOrder(order);
+    res.json(newProductToOrder);
+  } catch (error) {
+    res.status(400);
+    res.json(error);
+  }
 };
 
 const order_routes = (app: express.Application) => {

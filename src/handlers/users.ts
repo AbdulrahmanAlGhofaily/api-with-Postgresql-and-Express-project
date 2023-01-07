@@ -6,13 +6,23 @@ import { verifyAuthToken } from '../middleware/verifyAuthToken';
 const store = new UserStore();
 
 const index = async (_req: Request, res: Response) => {
-  const users = await store.index();
-  res.json(users);
+  try {
+    const users = await store.index();
+    res.json(users);
+  } catch (error) {
+    res.status(400);
+    res.json(error);
+  }
 };
 
 const show = async (req: Request, res: Response) => {
-  const user = await store.show(req.params.id);
-  res.json(user);
+  try {
+    const user = await store.show(req.params.id);
+    res.json(user);
+  } catch (error) {
+    res.status(400);
+    res.json(error);
+  }
 };
 
 const create = async (req: Request, res: Response) => {
@@ -52,8 +62,13 @@ const update = async (req: Request, res: Response) => {
 };
 
 const deleteUser = async (req: Request, res: Response) => {
-  const deleted = await store.delete(req.params.id);
-  res.json(deleted);
+  try {
+    const deleted = await store.delete(req.params.id);
+    res.json(deleted);
+  } catch (error) {
+    res.status(400);
+    res.json(error);
+  }
 };
 
 const user_routes = (app: express.Application) => {
