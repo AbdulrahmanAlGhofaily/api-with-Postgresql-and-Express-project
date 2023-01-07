@@ -22,7 +22,7 @@ followed by the next two commands for granting user privileges to the database: 
 ## Running the app
 
 To start the application run `npm run start` or `npm run watch` which will start the app and will start looking for any changes on the code.<br>
-The ip address of the app and the port will pop in the terminal, to change these two head to the .env file and change it to you preference.
+The ip address of the app and the port (initially the used IP address 127.0.0.1 and the used port is 3000 and for the database port it is 5432) will pop in the terminal, to change these two head to the .env file and change it to you preference.
 
 ## Env variables
 
@@ -30,6 +30,7 @@ The ip address of the app and the port will pop in the terminal, to change these
 
 POSTGRES_HOST=127.0.0.1 <br>
 PORT=3000 <br>
+POSTGRES_PORT=5432 <br>
 CURRENT_ENV=dev <br>
 POSTGRES_DB=store_front <br>
 POSTGRES_DB_TEST=store_front_test <br>

@@ -5,24 +5,112 @@ The company stakeholders want to create an online storefront to showcase their g
 These are the notes from a meeting with the frontend developer that describe what endpoints the API needs to supply, as well as data shapes the frontend and backend have agreed meet the requirements of the application.
 <br>
 
+## Database schema
+
+---
+
+               List of relations
+
+| Schema |     Name      | Type  |     Owner     |
+| :----: | :-----------: | :---: | :-----------: |
+| public |  migrations   | table | project_admin |
+| public | order_product | table | project_admin |
+| public |    orders     | table | project_admin |
+| public |   products    | table | project_admin |
+| public |     users     | table | project_admin |
+
+<br>
+
+                                Table "public.users":
+
+|     Column      |          Type          | Collation | Nullable |              Default              |
+| :-------------: | :--------------------: | :-------: | :------: | :-------------------------------: |
+|       id        |        integer         |     /     | not null | nextval('users_id_seq'::regclass) |
+|    firstname    | character varying(100) |     /     |    /     |                                   |
+|    lastname     | character varying(100) |     /     |    /     |                                   |
+| password_digest |   character varying    |     /     |    /     |                                   |
+
+<br>
+
+Indexes: <br>
+"users_pkey" PRIMARY KEY, btree (id) <br>
+Referenced by: <br>
+TABLE "orders" CONSTRAINT "orders_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id)
+
+<br>
+
+                                    Table "public.products"
+
+| Column |          Type          | Collation | Nullable |               Default                |
+| :----: | :--------------------: | :-------: | :------: | :----------------------------------: |
+|   id   |        integer         |           | not null | nextval('products_id_seq'::regclass) |
+|  name  | character varying(100) |           |          |
+| price  |        integer         |           |          |
+
+Indexes: <br>
+"products_pkey" PRIMARY KEY, btree (id) <br>
+Referenced by: <br>
+TABLE "order_product" CONSTRAINT "order_product_product_id_fkey" FOREIGN KEY (product_id) REFERENCES products(id)
+
+<br>
+
+                            Table "public.orders"
+
+|    Column    |  Type   | Collation | Nullable |              Default               |
+| :----------: | :-----: | :-------: | :------: | :--------------------------------: |
+|      id      | integer |           | not null | nextval('orders_id_seq'::regclass) |
+| order_status | boolean |           |          |
+|   user_id    | bigint  |           |          |
+
+Indexes: <br>
+"orders_pkey" PRIMARY KEY, btree (id) <br>
+Foreign-key constraints: <br>
+"orders_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id) <br>
+Referenced by: <br>
+TABLE "order_product" CONSTRAINT "order_product_order_id_fkey" FOREIGN KEY (order_id) REFERENCES orders(id)
+
+ <br>
+
+                              Table "public.order_product"
+
+|   Column   |  Type   | Collation | Nullable |                  Default                  |
+| :--------: | :-----: | :-------: | :------: | :---------------------------------------: |
+|     id     | integer |           | not null | nextval('order_product_id_seq'::regclass) |
+|  quantity  | integer |           |          |
+| product_id | bigint  |           |          |
+|  order_id  | bigint  |           |          |
+
+Indexes: <br>
+"order_product_pkey" PRIMARY KEY, btree (id) <br>
+Foreign-key constraints: <br>
+"order_product_order_id_fkey" FOREIGN KEY (order_id) REFERENCES orders(id) <br>
+"order_product_product_id_fkey" FOREIGN KEY (product_id) REFERENCES products(id)
+
+<br>
+
 ## API Endpoints
+
+---
 
 ### **Users**
 
 -- To **create** a new user access `/users` using **POST** http request.
 
 **Request values:**
-|Arguments|Type|
-|:--:|:--:|
-|firstname |string|
-|lastname|string|
-|password|string|
+
+| Arguments |  Type  |
+| :-------: | :----: |
+| firstname | string |
+| lastname  | string |
+| password  | string |
+
 <br>
 
 **Response values:**
-|Arguments|Type|
-|:--:|:--:|
-|token|string|
+
+| Arguments |  Type  |
+| :-------: | :----: |
+|   token   | string |
 
 <br>
 ___
@@ -77,12 +165,14 @@ ___
 <br>
 
 **Response values:**
-|Arguments|Type|
-|:--:|:--:|
-|id|string|
-|firstname|string|
-|lastname|string|
-|password_digest|string|
+
+|    Arguments    |  Type  |
+| :-------------: | :----: |
+|       id        | string |
+|    firstname    | string |
+|    lastname     | string |
+| password_digest | string |
+
 <br>
 
 ---
@@ -174,11 +264,13 @@ ___
 <br>
 
 **Response values:**
-|Arguments|Type|
-|:--:|:--:|
-|id|string|
-|name|string|
-|price|number|
+
+| Arguments |  Type  |
+| :-------: | :----: |
+|    id     | string |
+|   name    | string |
+|   price   | number |
+
 <br>
 
 ---
@@ -186,9 +278,10 @@ ___
 -- To **delete** a specific product access `/products:id` using **DELETE** http request.
 
 **Request values:**
-|Parameter|Type|
-|:--:|:--:|
-|id|string|
+
+| Parameter |  Type  |
+| :-------: | :----: |
+|    id     | string |
 
 <br>
 
@@ -213,11 +306,12 @@ ___
 <br>
 
 **Response values:**
-|Arguments|Type|
-|:--:|:--:|
-|id|string|
-|user_id|string|
-|order_status|boolean|
+
+|  Arguments   |  Type   |
+| :----------: | :-----: |
+|      id      | string  |
+|   user_id    | string  |
+| order_status | boolean |
 
 <br>
 ___
@@ -269,11 +363,13 @@ ___
 <br>
 
 **Response values:**
-|Arguments|Type|
-|:--:|:--:|
-|id|string|
-|user_id|string|
-|order_status|boolean|
+
+|  Arguments   |  Type   |
+| :----------: | :-----: |
+|      id      | string  |
+|   user_id    | string  |
+| order_status | boolean |
+
 <br>
 
 ---
@@ -311,9 +407,10 @@ ___
 <br>
 
 **Response values:**
-|Arguments|Type|
-|:--:|:--:|
-|id|string|
-|quantity|number|
-|product_id|string|
-|order_id|string|
+
+| Arguments  |  Type  |
+| :--------: | :----: |
+|     id     | string |
+|  quantity  | number |
+| product_id | string |
+|  order_id  | string |
