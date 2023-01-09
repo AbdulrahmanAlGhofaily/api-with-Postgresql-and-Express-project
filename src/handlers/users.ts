@@ -63,7 +63,7 @@ const update = async (req: Request, res: Response) => {
 
 const deleteUser = async (req: Request, res: Response) => {
   try {
-    const deleted = await store.delete(req.params.id);
+    const deleted: String = await store.delete(req.params.id);
     res.json(deleted);
   } catch (error) {
     res.status(400);

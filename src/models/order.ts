@@ -2,11 +2,11 @@ import client from '../database';
 
 export type Order = {
   id?: number;
-  order_id?: string;
+  order_id?: number;
   order_status?: boolean;
-  user_id?: string;
+  user_id?: number;
   quantity?: number;
-  product_id?: string;
+  product_id?: number;
 };
 
 export class OrderStore {
@@ -69,14 +69,16 @@ export class OrderStore {
     }
   }
 
-  async delete(id: string): Promise<Order> {
+  async delete(id: string): Promise<String> {
     try {
       const connection = await client.connect();
       const sql = 'DELETE FROM orders WHERE id=($1) RETURNING *';
 
-      const result = await connection.query(sql, [id]);
+      await connection.query(sql, [id]);
 
-      return result.rows[0];
+      connection.release();
+
+      return 'Order has been deleted successfully';
     } catch (error) {
       throw new Error(`Unable to delete order with the id of:${id}. Error type: ${error}`);
     }
@@ -86,9 +88,11 @@ export class OrderStore {
     try {
       const connection = await client.connect();
       const sql = 'INSERT INTO order_product (quantity, product_id, order_id) VALUES ($1, $2, $3) RETURNING *';
-      const result = connection.query(sql, [o.quantity, o.product_id, o.order_id]);
+      const result = await connection.query(sql, [o.quantity, o.product_id, o.order_id]);
 
-      return (await result).rows[0];
+      connection.release();
+
+      return result.rows[0];
     } catch (error) {
       throw new Error(`Unable to add a product to the order: ${error}`);
     }

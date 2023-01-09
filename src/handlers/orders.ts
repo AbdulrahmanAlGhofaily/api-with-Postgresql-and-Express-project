@@ -55,7 +55,7 @@ const update = async (req: Request, res: Response) => {
 };
 
 const deleteOrder = async (req: Request, res: Response) => {
-  const deleted: Order = await store.delete(req.params.id);
+  const deleted: String = await store.delete(req.params.id);
 
   res.json(deleted);
 };

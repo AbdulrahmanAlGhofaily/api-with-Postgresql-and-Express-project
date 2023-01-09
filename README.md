@@ -42,4 +42,6 @@ TOKEN_SECRET=Alb8alh12ksmsq1zzA!! <br>
 
 ## Testing the app
 
-To test the app run `npm run test`. Test result will be on the terminal.
+To test the app endpoints run `npm run test`. Test result will be on the terminal. <br>
+To test the JWT authentication use it through postman link [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/23886364-88d01eac-0cce-4760-9480-53c60198c096?action=collection%2Ffork&collection-url=entityId%3D23886364-88d01eac-0cce-4760-9480-53c60198c096%26entityType%3Dcollection%26workspaceId%3Df49dbc91-cbc4-4873-93f9-82dc586bd25b) <br>
+Creation of a new user should give a token. Copy the token head to any of the end points with other method, click on authorizarion, change it to Bearer token and paste the token there.

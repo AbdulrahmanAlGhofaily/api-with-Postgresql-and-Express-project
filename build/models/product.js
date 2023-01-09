@@ -84,7 +84,7 @@ class ProductStore {
                 const sql = 'DELETE FROM products WHERE id=($1)';
                 const result = yield connection.query(sql, [id]);
                 connection.release();
-                return result.rows[0];
+                return 'Product has been deleted successfully';
             }
             catch (error) {
                 throw new Error(`Unable to delete product with the id of:${id}. Error type: ${error}`);

@@ -13,12 +13,24 @@ const product_1 = require("../models/product");
 const verifyAuthToken_1 = require("../middleware/verifyAuthToken");
 const store = new product_1.ProductStore();
 const index = (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const products = yield store.index();
-    res.json(products);
+    try {
+        const products = yield store.index();
+        res.json(products);
+    }
+    catch (error) {
+        res.status(400);
+        res.json(error);
+    }
 });
 const show = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const product = yield store.show(req.params.id);
-    res.json(product);
+    try {
+        const product = yield store.show(req.params.id);
+        res.json(product);
+    }
+    catch (error) {
+        res.status(400);
+        res.json(error);
+    }
 });
 const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const product = {
@@ -50,8 +62,14 @@ const update = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 const deleteProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const deleted = yield store.delete(req.params.id);
-    res.json(deleted);
+    try {
+        const deleted = yield store.delete(req.params.id);
+        res.json(deleted);
+    }
+    catch (error) {
+        res.status(400);
+        res.json(error);
+    }
 });
 const product_routes = (app) => {
     app.get('/products', index);

@@ -17,12 +17,24 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const verifyAuthToken_1 = require("../middleware/verifyAuthToken");
 const store = new user_1.UserStore();
 const index = (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const users = yield store.index();
-    res.json(users);
+    try {
+        const users = yield store.index();
+        res.json(users);
+    }
+    catch (error) {
+        res.status(400);
+        res.json(error);
+    }
 });
 const show = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const user = yield store.show(req.params.id);
-    res.json(user);
+    try {
+        const user = yield store.show(req.params.id);
+        res.json(user);
+    }
+    catch (error) {
+        res.status(400);
+        res.json(error);
+    }
 });
 const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const user = {
@@ -57,8 +69,14 @@ const update = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const deleted = yield store.delete(req.params.id);
-    res.json(deleted);
+    try {
+        const deleted = yield store.delete(req.params.id);
+        res.json(deleted);
+    }
+    catch (error) {
+        res.status(400);
+        res.json(error);
+    }
 });
 const user_routes = (app) => {
     app.get('/users', verifyAuthToken_1.verifyAuthToken, index);

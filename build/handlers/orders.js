@@ -13,21 +13,38 @@ const order_1 = require("../models/order");
 const verifyAuthToken_1 = require("../middleware/verifyAuthToken");
 const store = new order_1.OrderStore();
 const index = (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const orders = yield store.index();
-    res.json(orders);
+    try {
+        const orders = yield store.index();
+        res.json(orders);
+    }
+    catch (error) {
+        res.status(400);
+        res.json(error);
+    }
 });
 const show = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const order = yield store.show(req.params.id);
-    res.json(order);
+    try {
+        const order = yield store.show(req.params.id);
+        res.json(order);
+    }
+    catch (error) {
+        res.status(400);
+        res.json(error);
+    }
 });
 const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const order = {
         order_status: req.body.order_status,
         user_id: req.body.user_id
     };
-    const newOrder = yield store.create(order);
-    console.log(newOrder);
-    res.json(newOrder);
+    try {
+        const newOrder = yield store.create(order);
+        res.json(newOrder);
+    }
+    catch (error) {
+        res.status(400);
+        res.json(error);
+    }
 });
 const update = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const orderId = req.params.id;
@@ -35,8 +52,14 @@ const update = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         order_status: req.body.order_status,
         user_id: req.body.user_id
     };
-    const updateOrder = yield store.update(orderId, order);
-    res.json(updateOrder);
+    try {
+        const updateOrder = yield store.update(orderId, order);
+        res.json(updateOrder);
+    }
+    catch (error) {
+        res.status(400);
+        res.json(error);
+    }
 });
 const deleteOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const deleted = yield store.delete(req.params.id);
@@ -48,9 +71,14 @@ const addProductToOrder = (req, res) => __awaiter(void 0, void 0, void 0, functi
         product_id: req.body.product_id,
         order_id: req.body.order_id
     };
-    console.log(order);
-    const newProductToOrder = yield store.addProductToOrder(order);
-    res.json(newProductToOrder);
+    try {
+        const newProductToOrder = yield store.addProductToOrder(order);
+        res.json(newProductToOrder);
+    }
+    catch (error) {
+        res.status(400);
+        res.json(error);
+    }
 });
 const order_routes = (app) => {
     app.get('/orders', verifyAuthToken_1.verifyAuthToken, index);

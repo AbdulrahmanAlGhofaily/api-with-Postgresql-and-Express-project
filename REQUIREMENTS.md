@@ -21,12 +21,12 @@ These are the notes from a meeting with the frontend developer that describe wha
 
                                 Table "public.users":
 
-|     Column      |          Type          | Collation | Nullable |              Default              |
-| :-------------: | :--------------------: | :-------: | :------: | :-------------------------------: |
-|       id        |        integer         |     /     | not null | nextval('users_id_seq'::regclass) |
-|    firstname    | character varying(100) |     /     |    /     |                                   |
-|    lastname     | character varying(100) |     /     |    /     |                                   |
-| password_digest |   character varying    |     /     |    /     |                                   |
+|  Column   |          Type          | Collation | Nullable |              Default              |
+| :-------: | :--------------------: | :-------: | :------: | :-------------------------------: |
+|    id     |        integer         |     /     | not null | nextval('users_id_seq'::regclass) |
+| firstname | character varying(100) |     /     |    /     |                                   |
+| lastname  | character varying(100) |     /     |    /     |                                   |
+| password  |   character varying    |     /     |    /     |                                   |
 
 <br>
 
@@ -58,7 +58,7 @@ TABLE "order_product" CONSTRAINT "order_product_product_id_fkey" FOREIGN KEY (pr
 | :----------: | :-----: | :-------: | :------: | :--------------------------------: |
 |      id      | integer |           | not null | nextval('orders_id_seq'::regclass) |
 | order_status | boolean |           |          |
-|   user_id    | bigint  |           |          |
+|   user_id    | integer |           |          |
 
 Indexes: <br>
 "orders_pkey" PRIMARY KEY, btree (id) <br>
@@ -75,8 +75,8 @@ TABLE "order_product" CONSTRAINT "order_product_order_id_fkey" FOREIGN KEY (orde
 | :--------: | :-----: | :-------: | :------: | :---------------------------------------: |
 |     id     | integer |           | not null | nextval('order_product_id_seq'::regclass) |
 |  quantity  | integer |           |          |
-| product_id | bigint  |           |          |
-|  order_id  | bigint  |           |          |
+| product_id | integer |           |          |
+|  order_id  | integer |           |          |
 
 Indexes: <br>
 "order_product_pkey" PRIMARY KEY, btree (id) <br>
@@ -140,7 +140,7 @@ Foreign-key constraints: <br>
 
 | Parameter |  Type  |
 | :-------: | :----: |
-|    id     | string |
+|    id     | number |
 
 <br>
 
@@ -167,12 +167,12 @@ Foreign-key constraints: <br>
 
 **Response values:**
 
-|    Arguments    |  Type  |
-| :-------------: | :----: |
-|       id        | string |
-|    firstname    | string |
-|    lastname     | string |
-| password_digest | string |
+| Arguments |  Type  |
+| :-------: | :----: |
+|    id     | number |
+| firstname | string |
+| lastname  | string |
+| password  | string |
 
 <br>
 
@@ -186,13 +186,13 @@ Foreign-key constraints: <br>
 
 | Parameter |  Type  |
 | :-------: | :----: |
-|    id     | string |
+|    id     | number |
 
 <br>
 
 **Response values:**
 
--- Object of type user (Deleted user).
+-- Successful message.
 
 ---
 
@@ -212,11 +212,12 @@ Foreign-key constraints: <br>
 <br>
 
 **Response values:**
-|Arguments|Type|
-|:--:|:--:|
-|id|string|
-|name|string|
-|price|number|
+
+| Arguments |  Type  |
+| :-------: | :----: |
+|    id     | number |
+|   name    | string |
+|   price   | number |
 
 <br>
 
@@ -246,7 +247,7 @@ Foreign-key constraints: <br>
 
 | Parameter |  Type  |
 | :-------: | :----: |
-|    id     | string |
+|    id     | number |
 
 <br>
 
@@ -275,7 +276,7 @@ Foreign-key constraints: <br>
 
 | Arguments |  Type  |
 | :-------: | :----: |
-|    id     | string |
+|    id     | number |
 |   name    | string |
 |   price   | number |
 
@@ -289,13 +290,13 @@ Foreign-key constraints: <br>
 
 | Parameter |  Type  |
 | :-------: | :----: |
-|    id     | string |
+|    id     | number |
 
 <br>
 
 **Response values:**
 
--- Object of type product (Deleted product).
+-- Successful message.
 
 ---
 
@@ -309,7 +310,7 @@ Foreign-key constraints: <br>
 
 |  Arguments   |  Type   |
 | :----------: | :-----: |
-|   user_id    | string  |
+|   user_id    | number  |
 | order_status | boolean |
 
 <br>
@@ -318,8 +319,8 @@ Foreign-key constraints: <br>
 
 |  Arguments   |  Type   |
 | :----------: | :-----: |
-|      id      | string  |
-|   user_id    | string  |
+|      id      | number  |
+|   user_id    | number  |
 | order_status | boolean |
 
 <br>
@@ -352,7 +353,7 @@ Foreign-key constraints: <br>
 
 | Parameter |  Type  |
 | :-------: | :----: |
-|    id     | string |
+|    id     | number |
 
 <br>
 
@@ -371,7 +372,7 @@ Foreign-key constraints: <br>
 
 |  Arguments   |  Type   |
 | :----------: | :-----: |
-|   user_id    | string  |
+|   user_id    | number  |
 | order_status | boolean |
 
 <br>
@@ -380,8 +381,8 @@ Foreign-key constraints: <br>
 
 |  Arguments   |  Type   |
 | :----------: | :-----: |
-|      id      | string  |
-|   user_id    | string  |
+|      id      | number  |
+|   user_id    | number  |
 | order_status | boolean |
 
 <br>
@@ -396,13 +397,13 @@ Foreign-key constraints: <br>
 
 | Parameter |  Type  |
 | :-------: | :----: |
-|    id     | string |
+|    id     | number |
 
 <br>
 
 **Response values:**
 
--- Object of type order (Deleted product).
+-- Successful message.
 
 <br>
 
@@ -417,8 +418,8 @@ Foreign-key constraints: <br>
 | Arguments  |  Type  |
 | :--------: | :----: |
 |  quantity  | number |
-| product_id | string |
-|  order_id  | string |
+| product_id | number |
+|  order_id  | number |
 
 <br>
 
@@ -428,5 +429,5 @@ Foreign-key constraints: <br>
 | :--------: | :----: |
 |     id     | string |
 |  quantity  | number |
-| product_id | string |
-|  order_id  | string |
+| product_id | number |
+|  order_id  | number |

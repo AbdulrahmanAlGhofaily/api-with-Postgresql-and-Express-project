@@ -5,8 +5,13 @@ import { verifyAuthToken } from '../middleware/verifyAuthToken';
 const store = new ProductStore();
 
 const index = async (_req: Request, res: Response) => {
-  const products = await store.index();
-  res.json(products);
+  try {
+    const products = await store.index();
+    res.json(products);
+  } catch (error) {
+    res.status(400);
+    res.json(error);
+  }
 };
 
 const show = async (req: Request, res: Response) => {
@@ -53,7 +58,7 @@ const update = async (req: Request, res: Response) => {
 
 const deleteProduct = async (req: Request, res: Response) => {
   try {
-    const deleted = await store.delete(req.params.id);
+    const deleted: String = await store.delete(req.params.id);
     res.json(deleted);
   } catch (error) {
     res.status(400);

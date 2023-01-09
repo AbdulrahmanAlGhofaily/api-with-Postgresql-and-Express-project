@@ -78,8 +78,9 @@ class OrderStore {
             try {
                 const connection = yield database_1.default.connect();
                 const sql = 'DELETE FROM orders WHERE id=($1) RETURNING *';
-                const result = yield connection.query(sql, [id]);
-                return result.rows[0];
+                yield connection.query(sql, [id]);
+                connection.release();
+                return 'Order has been deleted successfully';
             }
             catch (error) {
                 throw new Error(`Unable to delete order with the id of:${id}. Error type: ${error}`);
@@ -91,8 +92,9 @@ class OrderStore {
             try {
                 const connection = yield database_1.default.connect();
                 const sql = 'INSERT INTO order_product (quantity, product_id, order_id) VALUES ($1, $2, $3) RETURNING *';
-                const result = connection.query(sql, [o.quantity, o.product_id, o.order_id]);
-                return (yield result).rows[0];
+                const result = yield connection.query(sql, [o.quantity, o.product_id, o.order_id]);
+                connection.release();
+                return result.rows[0];
             }
             catch (error) {
                 throw new Error(`Unable to add a product to the order: ${error}`);
